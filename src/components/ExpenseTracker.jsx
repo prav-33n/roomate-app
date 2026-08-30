@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-
-const ROOMMATES = ['Tasha', 'Rihana', 'Lisa', 'Trinity'];
-
-export default function ExpenseTracker({ expenses, setExpenses }) {
+  
+export default function ExpenseTracker({ expenses, setExpenses, roommates }) {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
-  const [paidBy, setPaidBy] = useState(ROOMMATES[0]);
+  const [paidBy, setPaidBy] = useState(roommates[0]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,9 +27,9 @@ export default function ExpenseTracker({ expenses, setExpenses }) {
   };
 
   const totalExpenses = expenses.reduce((sum, item) => sum + item.amount, 0);
-  const sharePerPerson = totalExpenses / ROOMMATES.length;
+  const sharePerPerson = totalExpenses / roommates.length;
 
-  const balances = ROOMMATES.reduce((acc, name) => {
+  const balances = roommmates.reduce((acc, name) => {
     const totalPaidByPerson = expenses
       .filter((exp) => exp.paidBy === name)
       .reduce((sum, exp) => sum + exp.amount, 0);
@@ -43,7 +41,7 @@ export default function ExpenseTracker({ expenses, setExpenses }) {
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {ROOMMATES.map((name) => {
+        {roommates.map((name) => {
           const bal = balances[name] || 0;
           const isOwed = bal >= 0;
           return (
@@ -104,7 +102,7 @@ export default function ExpenseTracker({ expenses, setExpenses }) {
                 onChange={(e) => setPaidBy(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-500 text-black dark:text-white"
               >
-                {ROOMMATES.map((name) => (
+                {roommates.map((name) => (
                   <option key={name} value={name}>{name}</option>
                 ))}
               </select>
@@ -118,7 +116,7 @@ export default function ExpenseTracker({ expenses, setExpenses }) {
             </button>
           </form>
         </div>
-        
+
         <div className="lg:col-span-2 bg-white dark:bg-black p-6 rounded-2xl border border-slate-200 dark:border-zinc-800">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-black tracking-tight text-black dark:text-white">Active Ledger</h2>

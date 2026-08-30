@@ -2,13 +2,13 @@ import React from 'react';
 
 const ROOMMATES = ['Tasha', 'Rihana', 'Lisa', 'Trinity'];
 
-export default function ChoreTracker({ chores, setChores }) {
+export default function ChoreTracker({ chores, setChores, roommates }) {
   
   const handleRotate = (choreId) => {
     setChores(
       chores.map((chore) => {
         if (chore.id !== choreId) return chore;
-        const nextIndex = (chore.currentIndex + 1) % ROOMMATES.length;
+        const nextIndex = (chore.currentIndex + 1) % roommates.length;
         return {
           ...chore,
           currentIndex: nextIndex,

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 
-const ROOMMATES = ['Tasha', 'Rihana', 'Lisa', 'Trinity'];
-
-export default function AuthScreen({ onLogin }) {
+export default function AuthScreen({ onLogin, roomates}) {
   const [isSignUp, setIsSignUp] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(ROOMMATES[0]);
+  const [selectedUser, setSelectedUser] = useState(roomates[0]);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -58,7 +56,7 @@ export default function AuthScreen({ onLogin }) {
               onChange={(e) => setSelectedUser(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-black text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 text-black dark:text-white transition-all"
             >
-              {ROOMMATES.map((name) => (
+              {roomates.map((name) => (
                 <option key={name} value={name}>{name}</option>
               ))}
             </select>
