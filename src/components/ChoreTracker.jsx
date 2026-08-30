@@ -27,7 +27,7 @@ export default function ChoreTracker({ chores, setChores, roommates }) {
   };
 
   return (
-    <div className="bg-white dark:bg-black rounded-2xl border border-slate-200 dark:border-zinc-800 p-6">
+    <div className="bg-white dark:bg-zinc-950 rounded-2xl border border-slate-200 dark:border-zinc-900 p-6 transition-colors duration-300">
       <div className="flex justify-between items-center mb-6">
         <div>
           <h2 className="text-lg font-black tracking-tight text-black dark:text-white">Chore Rotations</h2>

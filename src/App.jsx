@@ -55,7 +55,8 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-zinc-100 transition-colors duration-300">
+    <div className="min-h-screen bg-neutral-50 dark:bg-black text-neutral-900 dark:text-zinc-100 bg-white dark:bg-zinc-950 transition-colors duration-300">
+
       
       <header className="bg-white dark:bg-black border-b border-slate-200 dark:border-zinc-900 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 h-16 flex justify-between items-center">

@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
-  
+import React, { useState, useEffect } from 'react';
+
 export default function ExpenseTracker({ expenses, setExpenses, roommates }) {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
-  const [paidBy, setPaidBy] = useState(roommates[0]);
+  const [paidBy, setPaidBy] = useState('');
+
+  useEffect(() => {
+    if (roommates && roommates.length > 0 && !paidBy) {
+      setPaidBy(roommates[0]);
+    }
+  }, [roommates, paidBy]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,7 +19,7 @@ export default function ExpenseTracker({ expenses, setExpenses, roommates }) {
       id: crypto.randomUUID(),
       description,
       amount: parseFloat(amount),
-      paidBy,
+      paidBy: paidBy || roommates[0],
       date: new Date().toLocaleDateString(),
     };
 
@@ -26,13 +32,14 @@ export default function ExpenseTracker({ expenses, setExpenses, roommates }) {
     setExpenses(expenses.filter((exp) => exp.id !== id));
   };
 
-  const totalExpenses = expenses.reduce((sum, item) => sum + item.amount, 0);
-  const sharePerPerson = totalExpenses / roommates.length;
+  const totalExpenses = expenses?.reduce((sum, item) => sum + item.amount, 0) || 0;
+  const currentRoster = roommates && roommates.length > 0 ? roommates : ['Tasha', 'Rihana', 'Lisa', 'Trinity'];
+  const sharePerPerson = totalExpenses / currentRoster.length;
 
-  const balances = roommmates.reduce((acc, name) => {
+  const balances = currentRoster.reduce((acc, name) => {
     const totalPaidByPerson = expenses
-      .filter((exp) => exp.paidBy === name)
-      .reduce((sum, exp) => sum + exp.amount, 0);
+      ?.filter((exp) => exp.paidBy === name)
+      .reduce((sum, exp) => sum + exp.amount, 0) || 0;
     
     acc[name] = totalPaidByPerson - sharePerPerson;
     return acc;
@@ -41,7 +48,7 @@ export default function ExpenseTracker({ expenses, setExpenses, roommates }) {
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {roommates.map((name) => {
+        {currentRoster.map((name) => {
           const bal = balances[name] || 0;
           const isOwed = bal >= 0;
           return (
@@ -102,7 +109,7 @@ export default function ExpenseTracker({ expenses, setExpenses, roommates }) {
                 onChange={(e) => setPaidBy(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-black text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-500 text-black dark:text-white"
               >
-                {roommates.map((name) => (
+                {currentRoster.map((name) => (
                   <option key={name} value={name}>{name}</option>
                 ))}
               </select>
