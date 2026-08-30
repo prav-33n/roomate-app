@@ -22,6 +22,11 @@ export default function App() {
   const [currentUser, setCurrentUser] = useLocalStorage('roomie-session-user', null);
 
   const [roommates, setRoommates] = useLocalStorage('roomie-roster', DEFAULT_ROOMMATES);
+  React.useEffect(() => {
+  if (!roommates || roommates.length === 0) {
+    setRoommates(DEFAULT_ROOMMATES);
+  }
+}, [roommates, setRoommates]);
 
   React.useEffect(() => {
     const root = window.document.documentElement;

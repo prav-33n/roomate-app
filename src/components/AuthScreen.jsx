@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function AuthScreen({ onLogin, roomates}) {
+export default function AuthScreen({ onLogin, roommates }) {
   const [isSignUp, setIsSignUp] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(roomates[0]);
+  const [selectedUser, setSelectedUser] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  useEffect(() => {
+    if (roommates && roommates.length > 0 && !selectedUser) {
+      setSelectedUser(roommates[0]);
+    }
+  }, [roommates, selectedUser]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,7 +61,7 @@ export default function AuthScreen({ onLogin, roomates}) {
               onChange={(e) => setSelectedUser(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-black text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 text-black dark:text-white transition-all"
             >
-              {roomates.map((name) => (
+              {roommates?.map((name) => (
                 <option key={name} value={name}>{name}</option>
               ))}
             </select>
